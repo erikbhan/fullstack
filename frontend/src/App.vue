@@ -3,18 +3,18 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-<div class="container">
-  <header class="header">
-    <nav>
+  <div class="container">
+    <header class="header">
+      <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/contact">Contact</RouterLink>
       </nav>
-  </header>
-  <div class="main">
-    <RouterView />
+    </header>
+    <div class="main">
+      <RouterView />
+    </div>
+    <div class="footer"><small>This is the footer</small></div>
   </div>
-  <div class="footer"><small>This is the footer</small></div>
-</div>
 </template>
 
 <style scoped>
@@ -27,16 +27,20 @@ import { RouterLink, RouterView } from 'vue-router'
   grid-auto-rows: 1fr;
   grid-auto-flow: row;
   grid-template-areas:
-    "header"
-    "main"
-    "footer";
+    'header'
+    'main'
+    'footer';
 }
 
-.header { grid-area: header; }
+.header {
+  grid-area: header;
+}
 
 .main {
   grid-area: main;
 }
 
-.footer { grid-area: footer; }
+.footer {
+  grid-area: footer;
+}
 </style>

@@ -1,27 +1,32 @@
 <script setup lang="ts">
-
-import { ref } from 'vue';
+import { ref } from 'vue'
 import Calculator from '../components/CalculatorComponent.vue'
 import Log from '../components/LogComponent.vue'
 
-let calculations = ref<string[]>([]);
-const logCalculation = (firstValue: number, secondValue: number, result: number, operator: string) => {
+let calculations = ref<string[]>([])
+const logCalculation = (
+  firstValue: number,
+  secondValue: number,
+  result: number,
+  operator: string
+) => {
   if (!operator) {
-    calculations.value.push(String(result));
-    return;
+    calculations.value.push(String(result))
+    return
   }
-  calculations.value.push(String(firstValue) + " " + operator + " " + String(secondValue) + " = " + String(result));
+  calculations.value.push(
+    String(firstValue) + ' ' + operator + ' ' + String(secondValue) + ' = ' + String(result)
+  )
 }
-
 </script>
 
 <template>
-<div class="container">
-  <div class="calculator"><Calculator @calculation="logCalculation" /></div>
-  <div class="log"><Log :calculationStrings="calculations" /></div>
-  <div class="leftside"></div>
-  <div class="rightside"></div>
-</div>
+  <div class="container">
+    <div class="calculator"><Calculator @calculation="logCalculation" /></div>
+    <div class="log"><Log :calculationStrings="calculations" /></div>
+    <div class="leftside"></div>
+    <div class="rightside"></div>
+  </div>
 </template>
 
 <style scoped>
@@ -30,12 +35,15 @@ const logCalculation = (firstValue: number, secondValue: number, result: number,
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr;
   grid-auto-flow: row;
-  grid-template-areas:
-    "leftside log calculator rightside";
+  grid-template-areas: 'leftside log calculator rightside';
 }
 
-.leftside { grid-area: leftside; }
-.rightside { grid-area: rightside; }
+.leftside {
+  grid-area: leftside;
+}
+.rightside {
+  grid-area: rightside;
+}
 .calculator {
   grid-area: calculator;
 }

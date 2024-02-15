@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   calculationStrings: string[]
-}>();
+}>()
 </script>
 
 <template>
@@ -19,7 +19,6 @@ const props = defineProps<{
 div {
   max-height: object-fit;
   overflow: scroll;
-
 }
 
 ul {
@@ -31,6 +30,5 @@ ul {
 li {
   padding: 0.5rem;
   border-bottom: 1px solid #ccc;
-
 }
 </style>
