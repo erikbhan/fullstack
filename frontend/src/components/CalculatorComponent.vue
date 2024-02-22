@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onUnmounted } from 'vue'
+import { ref, onUnmounted } from "vue"
+import axios from 'axios';
 
 const emit = defineEmits<{
   calculation: [firstValue: number, secondValue: number, result: number, operator: string]
@@ -10,6 +11,8 @@ const operator = ref('')
 const firstValue = ref(0)
 const secondValue = ref(0)
 const shouldReset = ref(false)
+axios.defaults.baseURL = 'http://localhost:8080';
+
 
 const handleNumberClick = (value: string) => {
   if (displayValue.value === '0' || shouldReset.value) {
@@ -49,30 +52,24 @@ const handleOperatorClick = (value: string) => {
   shouldReset.value = true
 }
 
-const calculate = () => {
-  secondValue.value = Number(displayValue.value)
-  switch (operator.value) {
-    case '+':
-      displayValue.value = String(firstValue.value + secondValue.value)
-      break
-    case '-':
-      displayValue.value = String(firstValue.value - secondValue.value)
-      break
-    case '×':
-      displayValue.value = String(firstValue.value * secondValue.value)
-      break
-    case '÷':
-      displayValue.value = String(firstValue.value / secondValue.value)
-      break
+const calculate = async () => {
+  if (operator.value.length === 0) {
+    return
   }
 
-  emit(
-    'calculation',
-    firstValue.value,
-    secondValue.value,
-    Number(displayValue.value),
-    operator.value
-  )
+  secondValue.value = Number(displayValue.value)
+
+  await axios.post('/calculate', {
+    num1: firstValue.value,
+    num2: secondValue.value,
+    operation: operator.value
+  }).then(response => {
+    displayValue.value = String(response.data)
+  }).catch(error => {
+    console.error(error)
+  })
+
+  emit("calculation", firstValue.value, secondValue.value, Number(displayValue.value), operator.value);
 
   operator.value = ''
   firstValue.value = 0
