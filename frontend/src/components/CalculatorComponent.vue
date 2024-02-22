@@ -4,10 +4,10 @@ import axios from 'axios';
 
 const emit = defineEmits<{
   calculation: [firstValue: number, secondValue: number, result: number, operator: string]
-}>();
+}>()
 
-const displayValue = ref("0")
-const operator = ref("")
+const displayValue = ref('0')
+const operator = ref('')
 const firstValue = ref(0)
 const secondValue = ref(0)
 const shouldReset = ref(false)
@@ -15,7 +15,7 @@ axios.defaults.baseURL = 'http://localhost:8080';
 
 
 const handleNumberClick = (value: string) => {
-  if (displayValue.value === "0" || shouldReset.value) {
+  if (displayValue.value === '0' || shouldReset.value) {
     displayValue.value = value
     shouldReset.value = false
   } else {
@@ -24,23 +24,23 @@ const handleNumberClick = (value: string) => {
 }
 
 const handleCommaClick = () => {
-  if (!displayValue.value.includes(",")) {
-    displayValue.value += ","
+  if (!displayValue.value.includes(',')) {
+    displayValue.value += ','
   }
 }
 
 const handleClearClick = () => {
-  displayValue.value = "0"
-  operator.value = ""
+  displayValue.value = '0'
+  operator.value = ''
   firstValue.value = 0
   secondValue.value = 0
 }
 
 const handleOperatorClick = (value: string) => {
-  if (value === "invert") {
+  if (value === 'invert') {
     displayValue.value = String(Number(displayValue.value) * -1)
     return
-  } else if (value === "%") {
+  } else if (value === '%') {
     displayValue.value = String(Number(displayValue.value) / 100)
     return
   }
@@ -71,7 +71,7 @@ const calculate = async () => {
 
   emit("calculation", firstValue.value, secondValue.value, Number(displayValue.value), operator.value);
 
-  operator.value = ""
+  operator.value = ''
   firstValue.value = 0
   secondValue.value = 0
   shouldReset.value = true
@@ -79,22 +79,22 @@ const calculate = async () => {
 
 const handleKeyPress = (event: KeyboardEvent) => {
   const { key } = event
-  if (key === "Enter") {
+  if (key === 'Enter') {
     calculate()
-  } else if (key === "Escape") {
+  } else if (key === 'Escape') {
     handleClearClick()
-  } else if (key === "+" || key === "-" || key === "*" || key === "/") {
+  } else if (key === '+' || key === '-' || key === '*' || key === '/') {
     handleOperatorClick(key)
-  } else if (key === ",") {
-    handleNumberClick(",")
+  } else if (key === ',') {
+    handleNumberClick(',')
   } else if (Number(key) >= 0 && Number(key) <= 9) {
     handleNumberClick(key)
   }
 }
 
-window.addEventListener("keydown", handleKeyPress)
+window.addEventListener('keydown', handleKeyPress)
 onUnmounted(() => {
-  window.removeEventListener("keydown", handleKeyPress)
+  window.removeEventListener('keydown', handleKeyPress)
 })
 </script>
 
@@ -137,8 +137,8 @@ onUnmounted(() => {
   grid-template-rows: 8em 1fr;
   grid-auto-flow: row;
   grid-template-areas:
-    "display"
-    "buttons";
+    'display'
+    'buttons';
   gap: 1rem;
 }
 
@@ -159,11 +159,11 @@ onUnmounted(() => {
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   gap: 1rem;
   grid-template-areas:
-    "clear invert percentage division"
-    "seven eight nine multiplication"
-    "four five six subtraction"
-    "one two three addition"
-    "zero zero comma equals";
+    'clear invert percentage division'
+    'seven eight nine multiplication'
+    'four five six subtraction'
+    'one two three addition'
+    'zero zero comma equals';
   grid-area: buttons;
 }
 
@@ -207,22 +207,58 @@ onUnmounted(() => {
   border-radius: 25%/50%;
 }
 
-.clear { grid-area: clear; }
-.invert { grid-area: invert; }
-.percentage { grid-area: percentage; }
-.division { grid-area: division; }
-.multiplication { grid-area: multiplication; }
-.subtraction { grid-area: subtraction; }
-.addition { grid-area: addition; }
-.equals { grid-area: equals; }
-.comma { grid-area: comma; }
-.one { grid-area: one; }
-.two { grid-area: two; }
-.three { grid-area: three; }
-.four { grid-area: four; }
-.five { grid-area: five; }
-.six { grid-area: six; }
-.seven { grid-area: seven; }
-.eight { grid-area: eight; }
-.nine { grid-area: nine; }
+.clear {
+  grid-area: clear;
+}
+.invert {
+  grid-area: invert;
+}
+.percentage {
+  grid-area: percentage;
+}
+.division {
+  grid-area: division;
+}
+.multiplication {
+  grid-area: multiplication;
+}
+.subtraction {
+  grid-area: subtraction;
+}
+.addition {
+  grid-area: addition;
+}
+.equals {
+  grid-area: equals;
+}
+.comma {
+  grid-area: comma;
+}
+.one {
+  grid-area: one;
+}
+.two {
+  grid-area: two;
+}
+.three {
+  grid-area: three;
+}
+.four {
+  grid-area: four;
+}
+.five {
+  grid-area: five;
+}
+.six {
+  grid-area: six;
+}
+.seven {
+  grid-area: seven;
+}
+.eight {
+  grid-area: eight;
+}
+.nine {
+  grid-area: nine;
+}
 </style>
