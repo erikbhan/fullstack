@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16-bookworm
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: calculator-db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+  frontend:
+    image: node:20-bookworm
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    command: bash -c "npm install && npm audit fix && npm run dev"
+    ports:
+      - 80:8081
+    depends_on:
+      - backend
